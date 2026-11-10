@@ -86,41 +86,46 @@ private void Update()
   {
     id: 'sutom',
     name: 'SUTOM',
-    languages: ['TODO: stack'],
+    languages: ['React', 'TypeScript', 'Vite', 'Express', 'TypeORM'],
     snippet: {
-      lang: 'javascript',
-      label: 'Game logic',
-      code: `// TODO: replace with a real excerpt from the repository
-function evaluateGuess(guess, target) {
-  const result = Array(target.length).fill("absent");
-  const remaining = [...target];
+      lang: 'typescript',
+      label: 'Board model · TypeScript',
+      code: `type TileState = "correct" | "present" | "absent" | "empty";
 
-  guess.split("").forEach((letter, i) => {
-    if (letter === target[i]) {
-      result[i] = "correct";
-      remaining[i] = null;
-    }
+type Tile = {
+  letter: string;
+  state: TileState;
+};
+
+const ROWS = 8;
+const COLS = 8;
+const REVEALED_FIRST_LETTER = "M";
+
+// ...
+
+function buildBoard(): Tile[][] {
+  return Array.from({ length: ROWS }, (_, rowIndex) => {
+    const guess = sampleGuesses[rowIndex] ?? [];
+    return Array.from({ length: COLS }, (_, colIndex) => {
+      if (guess[colIndex]) {
+        return guess[colIndex];
+      }
+      if (colIndex === 0) {
+        return { letter: REVEALED_FIRST_LETTER, state: "correct" as TileState };
+      }
+      return { letter: "", state: "empty" as TileState };
+    });
   });
-
-  guess.split("").forEach((letter, i) => {
-    const found = remaining.indexOf(letter);
-    if (result[i] === "absent" && found !== -1) {
-      result[i] = "misplaced";
-      remaining[found] = null;
-    }
-  });
-
-  return result;
 }`,
     },
     summary: {
-      fr: 'Jeu de devinettes de mots façon Sutom / Motus. Projet de groupe réalisé en BTS SIO.',
-      en: 'Sutom / Motus-style word-guessing game. Group project built during the BTS SIO.',
+      fr: 'Jeu de mots façon Sutom / Motus, projet de groupe en React et TypeScript. J\'ai réalisé l\'interface (plateau, clavier, statistiques, aide) ; l\'API Express et TypeORM a été écrite par mes coéquipiers.',
+      en: 'Sutom / Motus-style word game, a group project in React and TypeScript. I built the interface (board, keyboard, statistics, help); the Express and TypeORM API was written by my teammates.',
     },
     media: 'assets/media/sutom.png',
-    mediaAlt: { fr: 'Capture d’une partie', en: 'Screenshot of a game in progress' },
-    caption: { fr: 'Une partie en cours', en: 'A game in progress' },
-    link: 'https://github.com/CaptainHusky', // TODO: replace with the repository URL
+    mediaAlt: { fr: 'Capture de l\'interface du jeu', en: 'Screenshot of the game interface' },
+    caption: { fr: 'L’interface du jeu', en: 'The game interface' },
+    link: 'https://github.com/MayBeLinux/sutom',
   },
   {
     id: 'tetris',
@@ -224,7 +229,7 @@ else
     media: 'assets/media/tic-tac-toe.png',
     mediaAlt: { fr: 'Grille de morpion dans la console', en: 'Tic-Tac-Toe board in the console' },
     caption: { fr: 'Une partie dans la console', en: 'A game in the console' },
-    link: 'https://github.com/CaptainHusky', // TODO: this folder has no git remote yet; create the repository and put its URL here
+    link: 'https://github.com/CaptainHusky/Tic-Tac-Toe',
   },
 ];
 
@@ -274,8 +279,8 @@ const I18N = {
     'skills.basics': '(notions)',
     'contact.title': 'Contact',
     'footer.legal': 'Mentions légales & confidentialité',
-    'legal.editor': 'Éditeur du site : [nom et prénom — à compléter].',
-    'legal.host': "Hébergeur : [nom et adresse de l'hébergeur — à compléter].",
+    'legal.editor': 'Éditeur du site : Tudose Andrei.',
+    'legal.host': "Hébergeur : GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.",
     'legal.privacy': "Ce site n'utilise ni cookies, ni outil de statistiques, et ne collecte aucune donnée personnelle. Le choix de la langue est mémorisé uniquement dans votre navigateur. L'hébergeur peut conserver des journaux techniques de connexion.",
   },
   en: {
@@ -317,8 +322,8 @@ const I18N = {
     'skills.basics': '(basics)',
     'contact.title': 'Contact',
     'footer.legal': 'Legal notice & privacy',
-    'legal.editor': 'Site publisher: [full name — to be completed].',
-    'legal.host': 'Host: [name and address of the hosting provider — to be completed].',
+    'legal.editor': 'Site publisher: Tudose Andrei.',
+    'legal.host': 'Host: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.',
     'legal.privacy': 'This site uses no cookies and no analytics, and collects no personal data. Your language choice is stored only in your browser. The hosting provider may keep technical connection logs.',
   },
 };
