@@ -21,29 +21,39 @@
 const repos = [
   {
     id: 'favoris',
-    name: 'Favoris',
-    languages: ['Vue 3', 'Express', 'TypeORM', 'MariaDB'],
+    name: 'Favoris · AFTEC Room',
+    languages: ['Vue 3', 'TypeScript', 'Express', 'TypeORM', 'MySQL'],
     snippet: {
       lang: 'typescript',
-      label: 'Express · TypeScript',
-      code: `// TODO: replace with a real excerpt from the repository
-router.get("/bookmarks", async (req: Request, res: Response) => {
-  const bookmarks = await bookmarkRepository.find({
-    where: { user: { id: req.user.id } },
-    order: { createdAt: "DESC" },
-  });
+      label: 'Business rules · TypeScript',
+      code: `/**
+ * Vérifie le créneau demandé.
+ * Renvoie un message d'erreur, ou null si le créneau est accepté.
+ */
+export function checkTimeRules(start: Date, end: Date, now: Date = new Date()): string | null {
+    const durationInHours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
 
-  res.json(bookmarks);
-});`,
+    if (durationInHours < MIN_HOURS || durationInHours > MAX_HOURS) {
+        return \`La duree doit etre entre \${MIN_HOURS}h et \${MAX_HOURS}h\`;
+    }
+
+    // On tolère 1 minute de retard (le temps que la requête arrive).
+    const oneMinute = 60 * 1000;
+    if (start.getTime() < now.getTime() - oneMinute) {
+        return "Impossible de reserver un creneau passe";
+    }
+
+    return null;
+}`,
     },
     summary: {
-      fr: "Gestionnaire de favoris : interface Vue 3, API Express avec TypeORM et base MariaDB. Projet réalisé en BTS SIO.",
-      en: 'Bookmark manager: Vue 3 front end, Express API with TypeORM and a MariaDB database. Built during the BTS SIO.',
+      fr: 'Application web de réservation de salles pour l\'AFTEC : interface Vue 3 + Pinia, API Express avec TypeORM et MySQL, authentification JWT, rôles enseignant / administrateur et règles de réservation testées avec Jest.',
+      en: 'Room-booking web app for the AFTEC school: Vue 3 + Pinia front end, Express API with TypeORM and MySQL, JWT authentication, teacher / admin roles and booking rules covered by Jest tests.',
     },
     media: 'assets/media/favoris.png',
-    mediaAlt: { fr: 'Capture de la liste des favoris', en: 'Screenshot of the bookmarks list' },
-    caption: { fr: 'Liste des favoris', en: 'Bookmarks list' },
-    link: 'https://github.com/CaptainHusky', // TODO: replace with the repository URL
+    mediaAlt: { fr: 'Capture de l\'écran de réservation de salles', en: 'Screenshot of the room booking screen' },
+    caption: { fr: 'Réservation d’une salle', en: 'Booking a room' },
+    link: 'https://github.com/CaptainHusky/Favoris',
   },
   {
     id: 'final-protocol',
@@ -112,6 +122,110 @@ function evaluateGuess(guess, target) {
     caption: { fr: 'Une partie en cours', en: 'A game in progress' },
     link: 'https://github.com/CaptainHusky', // TODO: replace with the repository URL
   },
+  {
+    id: 'tetris',
+    name: 'Tetris in Console',
+    languages: ['C#', '.NET', 'Console'],
+    snippet: {
+      lang: 'csharp',
+      label: 'Rotation & wall-kick · C#',
+      code: `static void Rotate()
+{
+    int newRot = (currentRotation + 1) % 4;
+    if (IsValidPosition(currentPiece, newRot, currentX, currentY))
+    {
+        currentRotation = newRot;
+    }
+    else
+    {
+        // little wall-kick: try shift left/right 1
+        if (IsValidPosition(currentPiece, newRot, currentX + 1, currentY))
+        {
+            currentX += 1;
+            currentRotation = newRot;
+        }
+        else if (IsValidPosition(currentPiece, newRot, currentX - 1, currentY))
+        {
+            currentX -= 1;
+            currentRotation = newRot;
+        }
+    }
+}`,
+    },
+    summary: {
+      fr: 'Tetris jouable dans le terminal, en C# : sept tétrominos avec rotation et petit wall-kick, chute rapide, score, et gravité qui accélère toutes les cinq lignes.',
+      en: 'Playable Tetris in the terminal, written in C#: seven tetrominoes with rotation and a small wall-kick, hard drop, score, and gravity that speeds up every five lines.',
+    },
+    media: 'assets/media/tetris.gif',
+    mediaAlt: { fr: 'Partie de Tetris dans la console', en: 'Tetris game running in the console' },
+    caption: { fr: 'Partie en cours dans la console', en: 'A game running in the console' },
+    link: 'https://github.com/CaptainHusky/Tetris-In-Console',
+  },
+  {
+    id: 'snake',
+    name: 'Snake in Console',
+    languages: ['C#', '.NET', 'Console'],
+    snippet: {
+      lang: 'csharp',
+      label: 'Grow or move · C#',
+      code: `// This is how we advance, by adding a new head onto the board
+snake.AddFirst(newHead);
+
+// 7) Either we eat or move forward
+if (newHead.Equals(food))
+{
+    score += 10;
+    food = SpawnFood(snake);
+    // If we don't remove tail, the tail grows
+}
+else
+{
+    // If we do, the tail rests the same
+    snake.RemoveLast();
+}`,
+    },
+    summary: {
+      fr: 'Snake dans le terminal, en C# : commandes aux flèches ou WASD, nourriture placée hors du serpent, score, collisions avec les murs et le corps, et nouvelle partie à la fin.',
+      en: 'Snake in the terminal, written in C#: arrow keys or WASD controls, food never spawned on the snake, score, wall and self collisions, and a replay prompt at the end.',
+    },
+    media: 'assets/media/snake.gif',
+    mediaAlt: { fr: 'Partie de Snake dans la console', en: 'Snake game running in the console' },
+    caption: { fr: 'Partie en cours dans la console', en: 'A game running in the console' },
+    link: 'https://github.com/CaptainHusky/Snake-in-Console',
+  },
+  {
+    id: 'tic-tac-toe',
+    name: 'Tic-Tac-Toe',
+    languages: ['C#', '.NET', 'Console'],
+    snippet: {
+      lang: 'csharp',
+      label: 'Win detection · C#',
+      code: `static bool HasWinner()
+{
+    int[,] lines = new int[,]
+    {
+        {1,2,3},{4,5,6},{7,8,9},
+        {1,4,7},{2,5,8},{3,6,9},
+        {1,5,9},{3,5,7}
+    };
+    for (int i = 0; i < lines.GetLength(0); i++)
+    {
+        int a = lines[i, 0], b = lines[i, 1], c = lines[i, 2];
+        if (board[a] == board[b] && board[b] == board[c] && !char.IsDigit(board[a]))
+            return true;
+    }
+    return false;
+}`,
+    },
+    summary: {
+      fr: 'Morpion à deux joueurs dans le terminal, en C# : cases numérotées de 1 à 9, coups invalides refusés, détection des huit lignes gagnantes, égalité et nouvelle partie.',
+      en: 'Two-player Tic-Tac-Toe in the terminal, written in C#: cells numbered 1 to 9, invalid moves rejected, detection of the eight winning lines, draws, and a replay prompt.',
+    },
+    media: 'assets/media/tic-tac-toe.png',
+    mediaAlt: { fr: 'Grille de morpion dans la console', en: 'Tic-Tac-Toe board in the console' },
+    caption: { fr: 'Une partie dans la console', en: 'A game in the console' },
+    link: 'https://github.com/CaptainHusky', // TODO: this folder has no git remote yet; create the repository and put its URL here
+  },
 ];
 
 /* ==========================================================================
@@ -122,7 +236,7 @@ function evaluateGuess(guess, target) {
    ========================================================================== */
 const I18N = {
   fr: {
-    'meta.title': 'Husky — Portfolio développeur web',
+    'meta.title': 'Andrei — Portfolio développeur web',
     'a11y.skip': 'Aller au contenu',
     'lang.label': 'Langue',
     'nav.projects': 'Projets',
@@ -130,7 +244,7 @@ const I18N = {
     'nav.contact': 'Contact',
     'hero.eyebrow': 'BTS SIO · option SLAM',
     'hero.role': 'Développeur web full-stack',
-    'hero.lead': "Étudiant en première année de BTS SIO, je construis des applications web de bout en bout : interface Vue 3, API Express, base de données SQL.",
+    'hero.lead': "Étudiant en deuxieme année de BTS SIO, je construis des applications web de bout en bout : interface Vue 3, API Express, base de données SQL.",
     'hero.status': "À la recherche d'une alternance",
     'hero.ctaProjects': 'Voir mes projets',
     'hero.ctaCv': 'Télécharger mon CV',
@@ -165,7 +279,7 @@ const I18N = {
     'legal.privacy': "Ce site n'utilise ni cookies, ni outil de statistiques, et ne collecte aucune donnée personnelle. Le choix de la langue est mémorisé uniquement dans votre navigateur. L'hébergeur peut conserver des journaux techniques de connexion.",
   },
   en: {
-    'meta.title': 'Husky — Web developer portfolio',
+    'meta.title': 'Andrei — Web developer portfolio',
     'a11y.skip': 'Skip to content',
     'lang.label': 'Language',
     'nav.projects': 'Projects',
@@ -173,7 +287,7 @@ const I18N = {
     'nav.contact': 'Contact',
     'hero.eyebrow': 'BTS SIO · SLAM track',
     'hero.role': 'Full-stack web developer',
-    'hero.lead': 'First-year BTS SIO student building web applications end to end: Vue 3 front end, Express API, SQL database.',
+    'hero.lead': 'Second-year BTS SIO student building web applications end to end: Vue 3 front end, Express API, SQL database.',
     'hero.status': 'Looking for a work-study placement (alternance)',
     'hero.ctaProjects': 'See my projects',
     'hero.ctaCv': 'Download my CV',
