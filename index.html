@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Husky — Portfolio développeur web</title>
+  <meta name="description" content="Portfolio de Husky, étudiant en BTS SIO option SLAM, développeur web full-stack.">
+  <meta name="theme-color" content="#171a21">
+  <link rel="stylesheet" href="style.css">
+  <!-- highlight.js is loaded first; `defer` keeps the execution order of the two scripts. -->
+  <script src="assets/vendor/highlight.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Aller au contenu</a>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Husky">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 2.5 28 9.25v13.5L16 29.5 4 22.75V9.25z"/>
+          <path d="M12 10.5v11M20 10.5v11M12 16h8"/>
+        </svg>
+        <span class="brand-name">Husky</span>
+      </a>
+
+      <nav class="nav" aria-label="Navigation">
+        <a href="#projects" data-i18n="nav.projects">Projets</a>
+        <a href="#about" data-i18n="nav.about">À propos</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <!-- The active language is always visible (aria-pressed drives the styling). -->
+      <div class="lang-toggle" role="group" data-i18n-aria="lang.label" aria-label="Langue">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================== HERO ============================== -->
+    <section class="container hero" id="top">
+      <div class="panel hero-pitch">
+        <p class="eyebrow" data-i18n="hero.eyebrow">BTS SIO · option SLAM</p>
+        <h1>Husky</h1>
+        <p class="role" data-i18n="hero.role">Développeur web full-stack</p>
+        <p class="lead" data-i18n="hero.lead">Étudiant en deuxieme année de BTS SIO, je construis des applications web de bout en bout : interface Vue 3, API Express, base de données SQL.</p>
+
+        <p class="status">
+          <span class="dot" aria-hidden="true"></span>
+          <span data-i18n="hero.status">À la recherche d'une alternance</span>
+        </p>
+
+        <div class="cta">
+          <a class="btn btn-green" href="#projects" data-i18n="hero.ctaProjects">Voir mes projets</a>
+          <!-- Put your CV at assets/cv.pdf -->
+          <a class="btn btn-blue" href="assets/cv.pdf" download data-i18n="hero.ctaCv">Télécharger mon CV</a>
+        </div>
+      </div>
+
+      <div class="panel hero-photo">
+        <div class="photo-frame">
+          <!-- Put your photo at assets/photo.jpg. If it is missing, an "H" placeholder is shown. -->
+          <img src="assets/photo.jpg" alt="Portrait de Husky" data-i18n-alt="hero.photoAlt" data-fallback width="640" height="800">
+          <span class="photo-fallback" aria-hidden="true">H</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PROJECTS ============================ -->
+    <section class="container section" id="projects" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title" data-i18n="projects.title">Projets</h2>
+
+      <noscript>
+        <p class="panel noscript">JavaScript est nécessaire pour afficher les projets. / JavaScript is required to display the projects.
+          <a href="https://github.com/CaptainHusky">GitHub</a></p>
+      </noscript>
+
+      <div class="carousel" id="carousel" role="region" aria-roledescription="carousel" aria-label="Carrousel de projets" data-i18n-aria="projects.region" tabindex="0">
+        <button class="nav-btn nav-prev" id="prev" type="button" aria-label="Projet précédent" data-i18n-aria="projects.prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+        </button>
+
+        <!-- ONE card, ONE index: the code showcase and the info blocks are re-rendered together. -->
+        <article class="panel repo-card" id="repo-card">
+          <header class="repo-head">
+            <h3 id="repo-name"></h3>
+            <ul class="chips" id="repo-langs" aria-label="Technologies"></ul>
+          </header>
+
+          <div class="code-wrap">
+            <div class="code-bar"><span id="code-label"></span></div>
+            <pre id="repo-pre" tabindex="0"><code id="repo-code" class="hljs"></code></pre>
+          </div>
+
+          <div class="repo-info">
+            <section class="info-col" aria-labelledby="summary-title">
+              <h4 class="label" id="summary-title" data-i18n="projects.summary">Résumé</h4>
+              <p id="repo-summary"></p>
+            </section>
+
+            <figure class="info-col info-media">
+              <h4 class="label" data-i18n="projects.result">Résultat</h4>
+              <div class="media-box" id="repo-media"></div>
+              <figcaption id="repo-caption"></figcaption>
+            </figure>
+          </div>
+
+          <a class="btn btn-green btn-wide" id="repo-link" href="https://github.com/CaptainHusky" target="_blank" rel="noopener noreferrer">
+            <span data-i18n="projects.view">Voir le dépôt sur GitHub</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </article>
+
+        <button class="nav-btn nav-next" id="next" type="button" aria-label="Projet suivant" data-i18n-aria="projects.next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+
+        <div class="carousel-meta">
+          <span class="count" id="carousel-count"></span>
+          <div class="dots" id="carousel-dots"></div>
+        </div>
+      </div>
+
+      <!-- Screen-reader announcement on navigation (the card itself is not a live region: too chatty). -->
+      <p class="sr-only" id="sr-status" aria-live="polite"></p>
+    </section>
+
+    <!-- ============================== ABOUT ============================== -->
+    <section class="container section" id="about" aria-labelledby="about-title">
+      <h2 class="section-title" id="about-title" data-i18n="about.title">À propos</h2>
+
+      <div class="about-grid">
+        <div class="panel about-panel">
+          <h3 data-i18n="about.bioTitle">Parcours</h3>
+          <p data-i18n="about.bio">Je me forme au développement logiciel en BTS SIO (option SLAM) et j'interviens comme technicien informatique sur site, notamment sur des déploiements Linux.</p>
+
+          <ol class="timeline">
+            <li>
+              <strong data-i18n="about.t1.title">BTS SIO — option SLAM</strong>
+              <span data-i18n="about.t1.text">Développement d'applications web : Vue 3, Express, Laravel, bases de données.</span>
+            </li>
+            <li>
+              <strong data-i18n="about.t2.title">Technicien informatique</strong>
+              <span data-i18n="about.t2.text">Interventions sur site, déploiements Linux sur plusieurs machines.</span>
+            </li>
+            <li>
+              <strong data-i18n="about.t3.title">Prochaine étape</strong>
+              <span data-i18n="about.t3.text">Alternance en développement web.</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="panel about-panel">
+          <h3 data-i18n="about.skills">Compétences</h3>
+
+          <div class="skill-group">
+            <h4 class="label" data-i18n="skills.languages">Langages</h4>
+            <ul class="chips">
+              <li class="chip">TypeScript</li>
+              <li class="chip">PHP</li>
+              <li class="chip">C# <small data-i18n="skills.basics">(notions)</small></li>
+              <li class="chip">Java <small data-i18n="skills.basics">(notions)</small></li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h4 class="label" data-i18n="skills.web">Web</h4>
+            <ul class="chips">
+              <li class="chip">Vue 3</li>
+              <li class="chip">Pinia</li>
+              <li class="chip">Express</li>
+              <li class="chip">TypeORM</li>
+              <li class="chip">Laravel</li>
+            </ul>
+          </div>
+
+          <div class="skill-group">
+            <h4 class="label" data-i18n="skills.data">Données &amp; systèmes</h4>
+            <ul class="chips">
+              <li class="chip">MySQL</li>
+              <li class="chip">MariaDB</li>
+              <li class="chip">Linux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div class="footer-contact">
+        <h2 class="footer-title" data-i18n="contact.title">Contact</h2>
+        <!-- TODO: replace with your real address -->
+        <a class="mail" href="mailto:your.email@example.com">your.email@example.com</a>
+      </div>
+
+      <!-- Add more platforms here (Unity, LinkedIn…) as <li><a> entries once you have the URLs. -->
+      <ul class="footer-links">
+        <li><a href="https://github.com/CaptainHusky" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+
+      <details class="legal">
+        <summary data-i18n="footer.legal">Mentions légales &amp; confidentialité</summary>
+        <p data-i18n="legal.editor">Éditeur du site : [nom et prénom — à compléter].</p>
+        <p data-i18n="legal.host">Hébergeur : [nom et adresse de l'hébergeur — à compléter].</p>
+        <p data-i18n="legal.privacy">Ce site n'utilise ni cookies, ni outil de statistiques, et ne collecte aucune donnée personnelle. Le choix de la langue est mémorisé uniquement dans votre navigateur. L'hébergeur peut conserver des journaux techniques de connexion.</p>
+      </details>
+
+      <p class="copy">© <span id="year"></span> Husky</p>
+    </div>
+  </footer>
+</body>
+</html>

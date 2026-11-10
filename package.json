@@ -1,0 +1,14 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal portfolio: static site with a synced repository carousel (FR/EN).",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite"
+  },
+  "devDependencies": {
+    "vite": "^8.3.7"
+  }
+}
